@@ -28,7 +28,7 @@ public class broadcast extends BasicCommand {
         super(plugin, new broadcastDispatcher(), name, usage, Rank.DEVELOPER);
     }
     
-    @Endpoint(target = {PLAYER, CONSOLE})
+    @Endpoint(target = {PLAYER, CONSOLE, COMMAND_BLOCK})
     public void broadcast(@StringArg String[] messageArray) {
         String message = ChatColor.translateAlternateColorCodes('&', StringUtil.fromArgsArray(messageArray));
         if(SpleefLeague.getInstance().getConnectionClient().isEnabled()) {

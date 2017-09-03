@@ -27,7 +27,7 @@ public class points extends BasicCommand {
 
     @Endpoint(target = {PLAYER})
     public void pointsSelf(Player p) {
-        
+        pointsOther(p, p);
     }
     
     @Endpoint(target = {PLAYER})

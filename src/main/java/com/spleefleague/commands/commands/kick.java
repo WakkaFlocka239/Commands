@@ -5,6 +5,9 @@
  */
 package com.spleefleague.commands.commands;
 
+import static com.spleefleague.annotations.CommandSource.COMMAND_BLOCK;
+import static com.spleefleague.annotations.CommandSource.CONSOLE;
+import static com.spleefleague.annotations.CommandSource.PLAYER;
 import com.spleefleague.annotations.Endpoint;
 import com.spleefleague.annotations.PlayerArg;
 import com.spleefleague.annotations.StringArg;
@@ -36,7 +39,7 @@ public class kick extends BasicCommand {
         super(plugin, new kickDispatcher(), name, usage, Rank.MODERATOR);
     }
 
-    @Endpoint
+    @Endpoint(target = {PLAYER, CONSOLE, COMMAND_BLOCK})
     public void kick(CommandSender cs, @PlayerArg(exact = true) Player target, @StringArg String[] message) {
         String kickMessage = StringUtil.fromArgsArray(message);
         target.kickPlayer("You have been kicked: " + kickMessage);

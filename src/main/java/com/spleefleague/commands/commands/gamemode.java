@@ -5,6 +5,8 @@
  */
 package com.spleefleague.commands.commands;
 
+import static com.spleefleague.annotations.CommandSource.COMMAND_BLOCK;
+import static com.spleefleague.annotations.CommandSource.CONSOLE;
 import static com.spleefleague.annotations.CommandSource.PLAYER;
 import com.spleefleague.annotations.Endpoint;
 import com.spleefleague.annotations.IntArg;
@@ -43,21 +45,21 @@ public class gamemode extends BasicCommand {
     
     @Endpoint(target = {PLAYER})
     public void giveSelf(SLPlayer slp, @LiteralArg(value = "creative", aliases = {"survival", "adventure", "spectator"}) String mode) {
-        givePlayer(slp, mode, slp);
+        givePlayer(mode, slp);
     }
 
-    @Endpoint
-    public void givePlayer(SLPlayer slp, @LiteralArg(value = "creative", aliases = {"survival", "adventure", "spectator"}) String mode, @PlayerArg(exact = true) Player target) {
+    @Endpoint(target = {PLAYER, CONSOLE, COMMAND_BLOCK})
+    public void givePlayer(@LiteralArg(value = "creative", aliases = {"survival", "adventure", "spectator"}) String mode, @PlayerArg(exact = true) Player target) {
         handle(GameMode.valueOf(mode.toUpperCase()), target);
     }
     
     @Endpoint(target = {PLAYER})
     public void giveSelf(SLPlayer slp, @IntArg(min = 0, max = 3) int mode) {
-        givePlayer(slp, mode, slp);
+        givePlayer(mode, slp);
     }
     
-    @Endpoint
-    public void givePlayer(SLPlayer slp, @IntArg(min = 0, max = 3) int mode, @PlayerArg(exact = true) Player target) {
+    @Endpoint(target = {PLAYER, CONSOLE, COMMAND_BLOCK})
+    public void givePlayer(@IntArg(min = 0, max = 3) int mode, @PlayerArg(exact = true) Player target) {
         handle(GameMode.getByValue(mode), target);
     }
     

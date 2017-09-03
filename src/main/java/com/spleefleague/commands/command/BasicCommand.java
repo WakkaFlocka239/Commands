@@ -41,7 +41,6 @@ public abstract class BasicCommand extends DispatchableCommand implements Comman
     protected Rank requiredRank;
     protected final Set<Rank> additionalRanks;
     protected final Map<ServerType, Set<Rank>> additionalRanksPerServerTypes = new HashMap<>();
-    protected boolean hasCommandBlockExecutor = false;
     private String[] usages = null;
     public static final String NO_COMMAND_PERMISSION_MESSAGE = "You don't have permission to use this command!";
     public static final String PLAYERDATA_ERROR_MESSAGE = "Your player data hasn't yet been loaded. Please try again.";
@@ -89,11 +88,7 @@ public abstract class BasicCommand extends DispatchableCommand implements Comman
             } else if (sender instanceof ConsoleCommandSender) {
                 performRun(CommandSource.CONSOLE, sender, args);
             } else if (sender instanceof BlockCommandSender) {
-                if (hasCommandBlockExecutor) {
-                    performRun(CommandSource.COMMAND_BLOCK, sender, args);
-                } else {
-                    performRun(CommandSource.CONSOLE, sender, args);
-                }
+                performRun(CommandSource.COMMAND_BLOCK, sender, args);
             }
         } catch (Exception e) {
             e.printStackTrace();
