@@ -5,7 +5,6 @@
  */
 package com.spleefleague.commands.commands;
 
-import com.mongodb.client.FindIterable;
 import static com.spleefleague.annotations.CommandSource.CONSOLE;
 import static com.spleefleague.annotations.CommandSource.PLAYER;
 import com.spleefleague.annotations.Endpoint;
@@ -18,21 +17,17 @@ import com.spleefleague.core.chat.ChatManager;
 import com.spleefleague.commands.command.BasicCommand;
 import com.spleefleague.core.infraction.Infraction;
 import com.spleefleague.core.infraction.InfractionType;
-import com.spleefleague.core.io.EntityBuilder;
 import com.spleefleague.core.player.Rank;
 import com.spleefleague.core.player.SLPlayer;
 import com.spleefleague.core.plugin.CorePlugin;
-import com.spleefleague.core.utils.DatabaseConnection;
 import com.spleefleague.core.utils.StringUtil;
 import com.spleefleague.core.utils.TimeUtil;
+import com.spleefleague.entitybuilder.EntityBuilder;
 import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.chat.ComponentBuilder;
 import net.md_5.bungee.api.chat.HoverEvent;
-import org.bson.Document;
 import org.bukkit.Bukkit;
-import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Player;
 
 import java.time.Duration;
 import java.util.UUID;
