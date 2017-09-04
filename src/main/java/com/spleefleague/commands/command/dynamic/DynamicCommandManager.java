@@ -6,7 +6,7 @@ import com.spleefleague.core.io.Settings;
 import com.spleefleague.core.player.SLPlayer;
 import com.spleefleague.commands.command.dynamic.DynamicCommand.LoadedDynamicCommand;
 import com.spleefleague.core.plugin.CorePlugin;
-import com.spleefleague.core.utils.RuntimeCompiler;
+import com.spleefleague.core.utils.debugger.RuntimeCompiler;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
