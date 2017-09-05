@@ -38,7 +38,7 @@ public class ping extends BasicCommand {
 
     private void showPing(Player to, Player whose) {
         boolean same = (to == whose);
-        int ping = getPlayerPing(whose);
+        int ping = getPlayerPing(whose.getPlayer());
         ChatColor c;
         if (ping < 30) {
             c = ChatColor.DARK_GREEN;

@@ -22,8 +22,23 @@ import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
 public class sping extends BasicCommand {
+
     public sping(CorePlugin plugin, String name, String usage) {
         super(plugin, new spingDispatcher(), name, usage);
+    }
+
+    @Endpoint
+    public void spingAll(Player p) {
+        Map<String, Integer> pings = new LinkedHashMap<>();
+        for (EntityPlayer ep : DedicatedServer.getServer().getPlayerList().players) {
+            SLPlayer slpl = SpleefLeague.getInstance().getPlayerManager().get(ep.getUniqueID());
+            pings.put(slpl.getRank().getColor() + slpl.getName(), ep.ping);
+        }
+        pings = sortByValue(pings);
+        p.sendMessage(ChatColor.DARK_AQUA + "[====== " + ChatColor.GOLD + "Everyone's Pings" + ChatColor.DARK_AQUA + " ======]");
+        for (Map.Entry<String, Integer> pv : pings.entrySet()) {
+            p.sendMessage(getPingColor(pv.getValue()) + Integer.toString(pv.getValue()) + ChatColor.GRAY + " >> " + pv.getKey());
+        }
     }
 
     @Endpoint
@@ -32,10 +47,8 @@ public class sping extends BasicCommand {
         names.addAll(Arrays.asList(args));
         Map<String, Integer> pings = new LinkedHashMap<>();
         for (EntityPlayer ep : DedicatedServer.getServer().getPlayerList().players) {
-            if (!names.isEmpty()) {
-                if (!names.contains(ep.getName())) {
-                    continue;
-                }
+            if (!names.contains(ep.getName())) {
+                continue;
             }
             SLPlayer slpl = SpleefLeague.getInstance().getPlayerManager().get(ep.getUniqueID());
             pings.put(slpl.getRank().getColor() + slpl.getName(), ep.ping);

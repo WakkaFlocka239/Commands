@@ -48,10 +48,11 @@ public class spectate extends BasicCommand {
                     }
                     if (gp.spectateGracefully(target, p)) {
                         success(p, "You are now spectating " + target.getName());
+                        return;
                     }
                 }
             }
-
+            error(p, target.getName() + " is not ingame.");
         } else {
             error(p, "You are currently ingame!");
         }

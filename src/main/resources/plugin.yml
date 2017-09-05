@@ -265,11 +265,6 @@ commands:
         aliases: []
         usage: |
             /<command> <player> <currency type> <amount>
-    collectibles:
-        description: Command to list/give/take cosmetic items
-        aliases: [cosmetics, col]
-        usage: |
-            /<command>
     fakeentity:
         description: 'A command to work with fake entities'
         aliases: [fe]
