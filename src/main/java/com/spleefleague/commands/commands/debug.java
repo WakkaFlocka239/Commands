@@ -73,6 +73,18 @@ public class debug extends BasicCommand {
     }
 
     @Endpoint
+    public void implicitHost(CommandSender cs, @StringArg String key) {
+        Bukkit.getScheduler().runTaskAsynchronously(SpleefLeague.getInstance(), () -> {
+            DebuggerStartResult result = RuntimeCompiler.debugFromHastebin(key, cs);
+            if (result == null) {
+                error(cs, "Failed starting debugger!");
+                return;
+            }
+            result.informDebuggerStarted(cs);
+        });
+    }
+
+    @Endpoint
     public void cmd(CommandSender cs, @LiteralArg(value = "command", aliases = {"cmd"}) String l, @StringArg String name, @StringArg String[] args) {
         try {
             if (!RuntimeCompiler.runDebuggerCommand(name, cs, args)) {
