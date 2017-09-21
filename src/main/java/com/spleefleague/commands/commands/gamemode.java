@@ -45,21 +45,39 @@ public class gamemode extends BasicCommand {
     
     @Endpoint(target = {PLAYER})
     public void giveSelf(SLPlayer slp, @LiteralArg(value = "creative", aliases = {"survival", "adventure", "spectator"}) String mode) {
-        givePlayer(mode, slp);
+        givePlayer(slp, mode, slp);
     }
 
-    @Endpoint(target = {PLAYER, CONSOLE, COMMAND_BLOCK})
-    public void givePlayer(@LiteralArg(value = "creative", aliases = {"survival", "adventure", "spectator"}) String mode, @PlayerArg(exact = true) Player target) {
+    @Endpoint(target = {PLAYER})
+    public void givePlayer(SLPlayer slp, @LiteralArg(value = "creative", aliases = {"survival", "adventure", "spectator"}) String mode, @PlayerArg(exact = true) Player target) {
+        if (slp.getRank() == Rank.MODERATOR) {
+            error(slp, NO_COMMAND_PERMISSION_MESSAGE);
+            return;
+        }
+        givePlayerConsole(mode, target);
+    }
+    
+    @Endpoint(target ={CONSOLE, COMMAND_BLOCK})
+    public void givePlayerConsole(@LiteralArg(value = "creative", aliases = {"survival", "adventure", "spectator"}) String mode, @PlayerArg(exact = true) Player target) {
         handle(GameMode.valueOf(mode.toUpperCase()), target);
     }
     
     @Endpoint(target = {PLAYER})
     public void giveSelf(SLPlayer slp, @IntArg(min = 0, max = 3) int mode) {
+        if (slp.getRank() == Rank.MODERATOR) {
+            error(slp, NO_COMMAND_PERMISSION_MESSAGE);
+            return;
+        }
         givePlayer(mode, slp);
     }
     
-    @Endpoint(target = {PLAYER, CONSOLE, COMMAND_BLOCK})
+    @Endpoint(target = {PLAYER})
     public void givePlayer(@IntArg(min = 0, max = 3) int mode, @PlayerArg(exact = true) Player target) {
+        handle(GameMode.getByValue(mode), target);
+    }
+    
+    @Endpoint(target = {CONSOLE, COMMAND_BLOCK})
+    public void givePlayerConsole(@IntArg(min = 0, max = 3) int mode, @PlayerArg(exact = true) Player target) {
         handle(GameMode.getByValue(mode), target);
     }
     
