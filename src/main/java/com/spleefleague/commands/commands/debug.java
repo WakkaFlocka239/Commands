@@ -56,6 +56,18 @@ public class debug extends BasicCommand {
     }
 
     @Endpoint(priority = 0)
+    public void defaultHost(CommandSender cs, @StringArg String key) {
+        Bukkit.getScheduler().runTaskAsynchronously(SpleefLeague.getInstance(), () -> {
+            DebuggerStartResult result = RuntimeCompiler.debugFromHastebin(key, cs);
+            if (result == null) {
+                error(cs, "Failed starting debugger!");
+                return;
+            }
+            result.informDebuggerStarted(cs);
+        });
+    }
+
+    @Endpoint(priority = 0)
     public void explicitHost(CommandSender cs, @StringArg String hostArgument, @StringArg String key) {
         if (hostArgument.toLowerCase().startsWith("-host=") && hostArgument.length() > "-host=".length()) {
             String host = hostArgument.substring("-host=".length());
