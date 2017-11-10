@@ -270,3 +270,17 @@ commands:
         aliases: [fe]
         usage: |
             /<command>
+    virtualblock:
+        description: Manage virtual blocks
+        aliases: [vb]
+        usage: |
+          /<command> <set> <world> <x> <y> <z> <material> [data]
+    virtualworld:
+        description: Manage virtual worlds
+        aliases: [vw]
+        usage: |
+          /<command> <create|delete|add|remove> <world> [players]
+    setping:
+        description: Sets the aimed ping for a player
+        usage: |
+          /<command> <target> <ping>

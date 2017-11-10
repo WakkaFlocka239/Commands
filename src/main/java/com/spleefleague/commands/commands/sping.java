@@ -8,8 +8,6 @@ import com.spleefleague.core.player.SLPlayer;
 import com.spleefleague.core.plugin.CorePlugin;
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.Comparator;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
@@ -30,14 +28,13 @@ public class sping extends BasicCommand {
     @Endpoint
     public void spingAll(Player p) {
         Map<String, Integer> pings = new LinkedHashMap<>();
-        for (EntityPlayer ep : DedicatedServer.getServer().getPlayerList().players) {
-            SLPlayer slpl = SpleefLeague.getInstance().getPlayerManager().get(ep.getUniqueID());
-            pings.put(slpl.getRank().getColor() + slpl.getName(), ep.ping);
+        for (SLPlayer slpl : SpleefLeague.getInstance().getPlayerManager().getAll()) {
+            pings.put(slpl.getRank().getColor() + slpl.getName(), slpl.getPing());
         }
         pings = sortByValue(pings);
         p.sendMessage(ChatColor.DARK_AQUA + "[====== " + ChatColor.GOLD + "Everyone's Pings" + ChatColor.DARK_AQUA + " ======]");
         for (Map.Entry<String, Integer> pv : pings.entrySet()) {
-            p.sendMessage(getPingColor(pv.getValue()) + Integer.toString(pv.getValue()) + ChatColor.GRAY + " >> " + pv.getKey());
+            p.sendMessage(formatPing(pv.getValue()) + ChatColor.GRAY + " >> " + pv.getKey());
         }
     }
 
@@ -46,21 +43,20 @@ public class sping extends BasicCommand {
         Set<String> names = new HashSet<>();
         names.addAll(Arrays.asList(args));
         Map<String, Integer> pings = new LinkedHashMap<>();
-        for (EntityPlayer ep : DedicatedServer.getServer().getPlayerList().players) {
-            if (!names.contains(ep.getName())) {
+        for (SLPlayer slpl : SpleefLeague.getInstance().getPlayerManager().getAll()) {
+            if (!names.contains(slpl.getName())) {
                 continue;
             }
-            SLPlayer slpl = SpleefLeague.getInstance().getPlayerManager().get(ep.getUniqueID());
-            pings.put(slpl.getRank().getColor() + slpl.getName(), ep.ping);
+            pings.put(slpl.getRank().getColor() + slpl.getName(), slpl.getPing());
         }
         pings = sortByValue(pings);
         p.sendMessage(ChatColor.DARK_AQUA + "[====== " + ChatColor.GOLD + "Everyone's Pings" + ChatColor.DARK_AQUA + " ======]");
         for (Map.Entry<String, Integer> pv : pings.entrySet()) {
-            p.sendMessage(getPingColor(pv.getValue()) + Integer.toString(pv.getValue()) + ChatColor.GRAY + " >> " + pv.getKey());
+            p.sendMessage(formatPing(pv.getValue()) + ChatColor.GRAY + " >> " + pv.getKey());
         }
     }
-
-    public ChatColor getPingColor(int ping) {
+    
+    private String formatPing(int ping) {
         ChatColor c;
         if (ping < 30) {
             c = ChatColor.DARK_GREEN;
@@ -75,7 +71,12 @@ public class sping extends BasicCommand {
         } else {
             c = ChatColor.DARK_RED;
         }
-        return c;
+        if(ping != 1337) {
+            return c + Integer.toString(ping);
+        }
+        else { 
+            return "" + ChatColor.GREEN + 1 + ChatColor.RED + 3 + ChatColor.YELLOW + 3 + ChatColor.BLUE + 7;
+        }
     }
 
     public static <K, V extends Comparable<? super V>> Map<K, V> sortByValue(Map<K, V> map) {

@@ -17,6 +17,7 @@ import com.spleefleague.commands.command.BasicCommand;
 import com.spleefleague.core.player.Rank;
 import com.spleefleague.core.player.SLPlayer;
 import org.bukkit.GameMode;
+import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 /**
@@ -42,24 +43,35 @@ public class gamemode extends BasicCommand {
         }
     }
     
+    private boolean checkPerms(CommandSender sender) {
+        if(sender instanceof SLPlayer) {
+            if(((SLPlayer) sender).getRank() == Rank.MODERATOR) {
+                error(sender, NO_COMMAND_PERMISSION_MESSAGE);
+                return false;
+            }
+        }
+        return true;
+    }
     
     @Endpoint(target = {PLAYER})
     public void giveSelf(SLPlayer slp, @LiteralArg(value = "creative", aliases = {"survival", "adventure", "spectator"}) String mode) {
-        givePlayer(mode, slp);
+        givePlayer(slp, mode, slp);
     }
 
     @Endpoint(target = {PLAYER, CONSOLE, COMMAND_BLOCK})
-    public void givePlayer(@LiteralArg(value = "creative", aliases = {"survival", "adventure", "spectator"}) String mode, @PlayerArg(exact = true) Player target) {
+    public void givePlayer(CommandSender sender, @LiteralArg(value = "creative", aliases = {"survival", "adventure", "spectator"}) String mode, @PlayerArg(exact = true) Player target) {
+        if(!checkPerms(sender)) return;
         handle(GameMode.valueOf(mode.toUpperCase()), target);
     }
     
     @Endpoint(target = {PLAYER})
     public void giveSelf(SLPlayer slp, @IntArg(min = 0, max = 3) int mode) {
-        givePlayer(mode, slp);
+        givePlayer(slp, mode, slp);
     }
     
     @Endpoint(target = {PLAYER, CONSOLE, COMMAND_BLOCK})
-    public void givePlayer(@IntArg(min = 0, max = 3) int mode, @PlayerArg(exact = true) Player target) {
+    public void givePlayer(CommandSender sender, @IntArg(min = 0, max = 3) int mode, @PlayerArg(exact = true) Player target) {
+        if(!checkPerms(sender)) return;
         handle(GameMode.getByValue(mode), target);
     }
     

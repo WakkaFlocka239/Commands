@@ -55,7 +55,7 @@ public class debug extends BasicCommand {
         }
     }
 
-    @Endpoint(priority = 0)
+    @Endpoint
     public void defaultHost(CommandSender cs, @StringArg String key) {
         Bukkit.getScheduler().runTaskAsynchronously(SpleefLeague.getInstance(), () -> {
             DebuggerStartResult result = RuntimeCompiler.debugFromHastebin(key, cs);

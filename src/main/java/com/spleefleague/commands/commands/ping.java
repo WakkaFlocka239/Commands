@@ -6,11 +6,12 @@
 package com.spleefleague.commands.commands;
 
 import com.spleefleague.annotations.Endpoint;
-import com.spleefleague.annotations.PlayerArg;
+import com.spleefleague.annotations.SLPlayerArg;
 import net.minecraft.server.v1_12_R1.EntityPlayer;
 import com.spleefleague.core.plugin.CorePlugin;
 import com.spleefleague.commands.command.BasicCommand;
 import com.spleefleague.core.player.Rank;
+import com.spleefleague.core.player.SLPlayer;
 import org.bukkit.ChatColor;
 import org.bukkit.craftbukkit.v1_12_R1.entity.CraftPlayer;
 
@@ -27,18 +28,36 @@ public class ping extends BasicCommand {
     }
 
     @Endpoint
-    public void pingSelf(Player p) {
+    public void pingSelf(SLPlayer p) {
         showPing(p, p);
     }
     
     @Endpoint
-    public void pingOther(Player p, @PlayerArg Player target) {
+    public void pingOther(SLPlayer p, @SLPlayerArg SLPlayer target) {
         showPing(p, target);
     }
 
-    private void showPing(Player to, Player whose) {
-        boolean same = (to == whose);
-        int ping = getPlayerPing(whose.getPlayer());
+    private void showPing(SLPlayer to, SLPlayer whose) {
+        int ping = whose.getPing();
+        String realPing;
+        if(ping < whose.getAimedPing()) {
+            realPing = ChatColor.GRAY + " (Throttled to " + ChatColor.RED + formatPing(whose.getAimedPing()) + ChatColor.GRAY + ")";
+        }
+        else {
+            realPing = "";
+        }
+        if (to == whose) {
+            success(to, ChatColor.GRAY + "Your ping is: " + formatPing(ping) + realPing);
+        } else {
+            String who = whose.getName() + "'";
+            if(!whose.getName().endsWith("s")) {
+                who += "s";
+            }
+            success(to, ChatColor.RED + who + " ping" + ChatColor.GRAY + ": " + formatPing(ping) + realPing);
+        }
+    }
+    
+    private String formatPing(int ping) {
         ChatColor c;
         if (ping < 30) {
             c = ChatColor.DARK_GREEN;
@@ -53,20 +72,14 @@ public class ping extends BasicCommand {
         } else {
             c = ChatColor.DARK_RED;
         }
-        String pingStr = Integer.toString(ping) + " ms";
-        if (same) {
-            if (ping != 1337) {
-                success(to, ChatColor.GRAY + "Your ping is: " + c + pingStr);
-            } else {
-                success(to, ChatColor.GRAY + "Your ping is: " + ChatColor.GREEN + 1 + ChatColor.RED + 3 + ChatColor.YELLOW + 3 + ChatColor.BLUE + 7);
-            }
-        } else {
-            success(to, ChatColor.GRAY + "Showing ping for " + ChatColor.RED + whose.getName() + ChatColor.GRAY + ": " + c + pingStr);
+        String pingStr;
+        if(ping != 1337) {
+            pingStr = "" + c + Integer.toString(ping);
         }
-    }
-
-    private int getPlayerPing(Player p) {
-        EntityPlayer nmsp = (EntityPlayer) (((CraftPlayer) p).getHandle());
-        return nmsp.ping;
+        else { 
+            pingStr = "" + ChatColor.GREEN + 1 + ChatColor.RED + 3 + ChatColor.YELLOW + 3 + ChatColor.BLUE + 7;
+        }
+        pingStr += " ms";
+        return pingStr;
     }
 }
