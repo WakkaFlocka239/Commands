@@ -209,10 +209,6 @@ commands:
         aliases: [server]
         usage:
             /<command> <server>
-    rules:
-        description: Shows you the server rules
-        usage:
-            /<command> [page]
     dcmd:
         description: Manages dynamic commands
         usage: |
@@ -280,7 +276,3 @@ commands:
         aliases: [vw]
         usage: |
           /<command> <create|delete|add|remove> <world> [players]
-    setping:
-        description: Sets the aimed ping for a player
-        usage: |
-          /<command> <target> <ping>
