@@ -8,17 +8,14 @@ package com.spleefleague.commands.commands;
 import static com.spleefleague.annotations.CommandSource.COMMAND_BLOCK;
 import static com.spleefleague.annotations.CommandSource.CONSOLE;
 import static com.spleefleague.annotations.CommandSource.PLAYER;
+import com.spleefleague.annotations.DoubleArg;
 import com.spleefleague.annotations.Endpoint;
-import com.spleefleague.annotations.IntArg;
 import com.spleefleague.annotations.PlayerArg;
 import com.spleefleague.commands.command.BasicCommand;
 import com.spleefleague.core.player.Rank;
-import com.spleefleague.core.player.SLPlayer;
 import com.spleefleague.core.plugin.CorePlugin;
 import com.spleefleague.core.utils.ServerType;
-import org.bukkit.Bukkit;
 import org.bukkit.Location;
-import org.bukkit.command.Command;
 import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerTeleportEvent;
 
@@ -34,13 +31,23 @@ public class tppos extends BasicCommand {
     }
 
     @Endpoint(target = {PLAYER})
-    public void tpposSelf(Player target, @IntArg int x, @IntArg int y, @IntArg int z) {
+    public void tpposSelf(Player target, @DoubleArg double x, @DoubleArg double y, @DoubleArg double z) {
         tpposOther(target, x, y, z);
     }
     
     @Endpoint(target = {PLAYER, CONSOLE, COMMAND_BLOCK})
-    public void tpposOther(@PlayerArg Player target, @IntArg int x, @IntArg int y, @IntArg int z) {
-        Location loc = new Location(target.getWorld(), x, y, z);
+    public void tpposOther(@PlayerArg Player target, @DoubleArg double x, @DoubleArg double y, @DoubleArg double z) {
+        tpposOtherRotation(target, x, y, z, target.getLocation().getYaw(), target.getLocation().getPitch());
+    }
+
+    @Endpoint(target = {PLAYER})
+    public void tpposSelfRotation(Player target, @DoubleArg double x, @DoubleArg double y, @DoubleArg double z, @DoubleArg double yaw, @DoubleArg double pitch) {
+        tpposOtherRotation(target, x, y, z, pitch, yaw);
+    }
+    
+    @Endpoint(target = {PLAYER, CONSOLE, COMMAND_BLOCK})
+    public void tpposOtherRotation(@PlayerArg Player target, @DoubleArg double x, @DoubleArg double y, @DoubleArg double z, @DoubleArg double yaw, @DoubleArg double pitch) {
+        Location loc = new Location(target.getWorld(), x, y, z, (float)yaw, (float)pitch);
         target.teleport(loc, PlayerTeleportEvent.TeleportCause.COMMAND);
     }
 }
