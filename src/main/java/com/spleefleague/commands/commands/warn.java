@@ -42,7 +42,7 @@ public class warn extends BasicCommand {
         UUID senderUUID = cs instanceof Player ? ((Player) cs).getUniqueId() : UUID.fromString("00000000-0000-0000-0000-000000000000");
         String warnMessage = StringUtil.fromArgsArray(message);
         target.sendMessage(Theme.ERROR + "You have been warned: " + ChatColor.GRAY + warnMessage);
-        Infraction kick = new Infraction(target.getUniqueId(), senderUUID, InfractionType.KICK, System.currentTimeMillis(), -1, warnMessage);
+        Infraction kick = new Infraction(target.getUniqueId(), senderUUID, InfractionType.WARNING, System.currentTimeMillis(), -1, warnMessage);
         Bukkit.getScheduler().runTaskAsynchronously(SpleefLeague.getInstance(), () -> {
             EntityBuilder.save(kick, SpleefLeague.getInstance().getPluginDB().getCollection("Infractions"));
         });

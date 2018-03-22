@@ -7,15 +7,11 @@ package com.spleefleague.commands.commands;
 
 import com.spleefleague.annotations.Endpoint;
 import com.spleefleague.annotations.SLPlayerArg;
-import net.minecraft.server.v1_12_R1.EntityPlayer;
 import com.spleefleague.core.plugin.CorePlugin;
 import com.spleefleague.commands.command.BasicCommand;
 import com.spleefleague.core.player.Rank;
 import com.spleefleague.core.player.SLPlayer;
 import org.bukkit.ChatColor;
-import org.bukkit.craftbukkit.v1_12_R1.entity.CraftPlayer;
-
-import org.bukkit.entity.Player;
 
 /**
  *
@@ -39,13 +35,7 @@ public class ping extends BasicCommand {
 
     private void showPing(SLPlayer to, SLPlayer whose) {
         int ping = whose.getPing();
-        String realPing;
-        if(ping < whose.getAimedPing()) {
-            realPing = ChatColor.GRAY + " (Throttled to " + ChatColor.RED + formatPing(whose.getAimedPing()) + ChatColor.GRAY + ")";
-        }
-        else {
-            realPing = "";
-        }
+        String realPing = "";
         if (to == whose) {
             success(to, ChatColor.GRAY + "Your ping is: " + formatPing(ping) + realPing);
         } else {
