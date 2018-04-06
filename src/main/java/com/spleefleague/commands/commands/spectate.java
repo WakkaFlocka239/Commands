@@ -10,7 +10,7 @@ import com.spleefleague.annotations.Endpoint;
 import com.spleefleague.annotations.PlayerArg;
 import com.spleefleague.commands.command.BasicCommand;
 import com.spleefleague.core.plugin.CorePlugin;
-import com.spleefleague.core.plugin.GamePlugin;
+import com.spleefleague.gameapi.GamePlugin;
 import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
 

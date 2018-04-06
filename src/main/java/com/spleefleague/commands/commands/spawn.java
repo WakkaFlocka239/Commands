@@ -12,7 +12,7 @@ import com.spleefleague.commands.command.BasicCommand;
 import com.spleefleague.core.player.PlayerState;
 import com.spleefleague.core.player.SLPlayer;
 import com.spleefleague.core.plugin.CorePlugin;
-import com.spleefleague.core.plugin.GamePlugin;
+import com.spleefleague.gameapi.GamePlugin;
 import com.spleefleague.core.spawn.SpawnManager.SpawnLocation;
 import org.bukkit.Bukkit;
 

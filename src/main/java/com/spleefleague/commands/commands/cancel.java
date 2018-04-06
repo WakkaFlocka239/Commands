@@ -5,14 +5,13 @@
  */
 package com.spleefleague.commands.commands;
 
-import com.spleefleague.annotations.CommandSource;
 import com.spleefleague.annotations.Endpoint;
 import com.spleefleague.annotations.SLPlayerArg;
 import com.spleefleague.commands.command.BasicCommand;
 import com.spleefleague.core.player.Rank;
 import com.spleefleague.core.player.SLPlayer;
 import com.spleefleague.core.plugin.CorePlugin;
-import com.spleefleague.core.plugin.GamePlugin;
+import com.spleefleague.gameapi.GamePlugin;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 

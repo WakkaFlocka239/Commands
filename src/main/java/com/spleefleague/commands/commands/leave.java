@@ -9,7 +9,7 @@ import static com.spleefleague.annotations.CommandSource.PLAYER;
 import com.spleefleague.annotations.Endpoint;
 import com.spleefleague.commands.command.BasicCommand;
 import com.spleefleague.core.plugin.CorePlugin;
-import com.spleefleague.core.plugin.GamePlugin;
+import com.spleefleague.gameapi.GamePlugin;
 import org.bukkit.entity.Player;
 
 /**
