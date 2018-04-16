@@ -8,7 +8,6 @@ package com.spleefleague.commands.command;
 import com.google.common.collect.Sets;
 import com.spleefleague.annotations.CommandSource;
 import com.spleefleague.annotations.DispatchResult;
-import com.spleefleague.annotations.DispatchResultType;
 import com.spleefleague.annotations.DispatchableCommand;
 import com.spleefleague.annotations.Dispatcher;
 import java.util.regex.Pattern;
@@ -21,7 +20,6 @@ import com.spleefleague.core.utils.ServerType;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
-import net.md_5.bungee.api.ChatColor;
 import org.apache.commons.lang.StringUtils;
 import org.bukkit.command.BlockCommandSender;
 import org.bukkit.command.Command;
@@ -36,6 +34,7 @@ import org.bukkit.entity.Player;
  */
 public abstract class BasicCommand extends DispatchableCommand implements CommandExecutor {
 
+    protected String prefix;
     protected CorePlugin plugin;
     protected String name;
     protected Rank requiredRank;
@@ -49,9 +48,18 @@ public abstract class BasicCommand extends DispatchableCommand implements Comman
     public BasicCommand(CorePlugin plugin, Dispatcher dispatcher, String name, String usage) {
         this(plugin, dispatcher, name, usage, Rank.DEFAULT);
     }
-
+    
+    public BasicCommand(CorePlugin plugin, String prefix, Dispatcher dispatcher, String name, String usage) {
+        this(plugin, prefix, dispatcher, name, usage, Rank.DEFAULT);
+    }
+    
     public BasicCommand(CorePlugin plugin, Dispatcher dispatcher, String name, String usage, Rank requiredRank, Rank... additionalRanks) {
+        this(plugin, plugin.getChatPrefix(), dispatcher, name, usage, requiredRank, additionalRanks);
+    }
+
+    public BasicCommand(CorePlugin plugin, String prefix, Dispatcher dispatcher, String name, String usage, Rank requiredRank, Rank... additionalRanks) {
         super(dispatcher);
+        this.prefix = prefix;
         this.plugin = plugin;
         this.name = name;
         this.requiredRank = requiredRank;
@@ -105,17 +113,17 @@ public abstract class BasicCommand extends DispatchableCommand implements Comman
     }
 
     protected void error(CommandSender cs, String message) {
-        cs.sendMessage(plugin.getChatPrefix() + " " + Theme.ERROR.buildTheme(false) + message);
+        cs.sendMessage(prefix + " " + Theme.ERROR.buildTheme(false) + message);
     }
 
     protected void success(CommandSender cs, String message) {
-        cs.sendMessage(plugin.getChatPrefix() + " " + Theme.SUCCESS.buildTheme(false) + message);
+        cs.sendMessage(prefix + " " + Theme.SUCCESS.buildTheme(false) + message);
     }
 
     protected void sendUsage(CommandSender cs) {
-        cs.sendMessage(plugin.getChatPrefix() + " " + Theme.ERROR.buildTheme(false) + "Correct Usage: ");
+        cs.sendMessage(prefix + " " + Theme.ERROR.buildTheme(false) + "Correct Usage: ");
         for (String m : usages) {
-            cs.sendMessage(plugin.getChatPrefix() + " " + Theme.INCOGNITO.buildTheme(false) + m);
+            cs.sendMessage(prefix + " " + Theme.INCOGNITO.buildTheme(false) + m);
         }
     }
     
@@ -123,7 +131,7 @@ public abstract class BasicCommand extends DispatchableCommand implements Comman
         DispatchResult result = super.run(cs, source, args);
         if(null != result.getType()) switch (result.getType()) {
             case NO_ROUTE:
-                cs.sendMessage(plugin.getChatPrefix() + " " + NO_PLAYER_INSTANCE);
+                cs.sendMessage(prefix + " " + NO_PLAYER_INSTANCE);
                 break;
             case NO_VALID_ROUTE:
                 sendUsage(cs);
