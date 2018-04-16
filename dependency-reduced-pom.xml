@@ -89,6 +89,13 @@
       <url>http://maven.sk89q.com/repo/</url>
     </repository>
   </repositories>
+  <pluginRepositories>
+    <pluginRepository>
+      <id>spleefleague-maven</id>
+      <name>spleefleague-maven</name>
+      <url>https://maven.spleefleague.com</url>
+    </pluginRepository>
+  </pluginRepositories>
   <dependencies>
     <dependency>
       <groupId>com.spleefleague</groupId>

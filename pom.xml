@@ -83,6 +83,13 @@
             </extension>
         </extensions>
     </build>
+    <pluginRepositories>
+        <pluginRepository>
+            <id>spleefleague-maven</id>
+            <name>spleefleague-maven</name>
+            <url>https://maven.spleefleague.com</url>
+        </pluginRepository>
+    </pluginRepositories>
     <repositories>
         <repository>
             <id>spleefleague-maven</id>
