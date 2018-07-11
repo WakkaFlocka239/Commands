@@ -10,7 +10,7 @@ commands:
         description: Command to set ranks
         aliases: []
         usage: |
-            /<command> <player> <rank>
+            /<command> [force] <player> <rank>
     reply:
         description: Reply to the last private message
         aliases: [r]
@@ -256,6 +256,11 @@ commands:
         aliases: []
         usage: |
             /<command> <player> <rank> <time in hours>
+    addtemprank:
+        description: Command to add a temporary rank
+        aliases: []
+        usage: |
+            /<command> <player> <rank> <time in hours>
     grantcurrency:
         description: Command to change amount of coins/premium credits player has
         aliases: []
@@ -276,3 +281,11 @@ commands:
         aliases: [vw]
         usage: |
           /<command> <create|delete|add|remove> <world> [players]
+    checkpoint:
+        description: Teleports you back to your last checkpoint
+        usage: |
+          /<command>
+    setcheckpoint:
+        description: Sets or unsets a checkpoint
+        usage: |
+          /<command> <target> [x, y, z, yaw, pitch] [duration]
