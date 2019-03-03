@@ -262,16 +262,6 @@ commands:
         aliases: []
         usage: |
             /<command> <player> <currency type> <amount>
-    virtualblock:
-        description: Manage virtual blocks
-        aliases: [vb]
-        usage: |
-          /<command> <set> <world> <x> <y> <z> <material> [data]
-    virtualworld:
-        description: Manage virtual worlds
-        aliases: [vw]
-        usage: |
-          /<command> <create|delete|add|remove> <world> [players]
     checkpoint:
         description: Teleports you back to your last checkpoint
         usage: |

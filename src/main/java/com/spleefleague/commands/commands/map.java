@@ -34,6 +34,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.MapMeta;
 import org.bukkit.map.MapCanvas;
 import org.bukkit.map.MapPalette;
 import org.bukkit.map.MapRenderer;
@@ -49,7 +50,7 @@ import org.w3c.dom.NodeList;
  */
 public class map extends BasicCommand {
 
-    private HashMap<Short, MapView> maps = new HashMap<>();
+    private HashMap<Integer, MapView> maps = new HashMap<>();
 
     public map(CorePlugin plugin, String name, String usage) {
         super(plugin, new mapDispatcher(), name, usage, Rank.DEVELOPER);
@@ -90,7 +91,10 @@ public class map extends BasicCommand {
                 });
             }
             maps.put(mv.getId(), mv);
-            ItemStack mapItem = new ItemStack(Material.MAP, 1, mv.getId());
+            ItemStack mapItem = new ItemStack(Material.MAP, 1);
+            MapMeta meta = (MapMeta) mapItem.getItemMeta();
+            meta.setMapView(mv);
+            mapItem.setItemMeta(meta);
             p.getInventory().addItem(mapItem);
         } catch (MalformedURLException ex) {
             error(p, "Invalid URL!");

@@ -45,7 +45,7 @@ public class unban extends BasicCommand {
         String banMessage = StringUtil.fromArgsArray(reason);
         UUID senderId = cs.getUniqueId();
         performUnban(target, senderId, cs.getName(), banMessage);
-        success(cs, "The player has been banned!");
+        success(cs, "The player has been unbanned!");
     }
     
     @Endpoint(target = {CONSOLE})

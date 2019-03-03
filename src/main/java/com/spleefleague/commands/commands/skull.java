@@ -8,6 +8,7 @@ import com.spleefleague.core.plugin.CorePlugin;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.SkullMeta;
 
 /**
@@ -21,8 +22,7 @@ public class skull extends BasicCommand {
 
     @Endpoint
     public void skull(Player p, @StringArg String name) {
-        ItemStack give = new ItemStack(Material.SKULL_ITEM);
-        give.setDurability((short) 3);
+        ItemStack give = new ItemStack(Material.PLAYER_HEAD);
         SkullMeta skullMeta = (SkullMeta) give.getItemMeta();
         skullMeta.setOwner(name);
         give.setItemMeta(skullMeta);
