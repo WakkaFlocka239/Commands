@@ -1,12 +1,9 @@
 import com.spleefleague.annotations.Endpoint;
-import com.spleefleague.annotations.PlayerArg;
 import com.spleefleague.annotations.LiteralArg;
 import com.spleefleague.core.plugin.CorePlugin;
 import com.spleefleague.commands.command.BasicCommand;
 import com.spleefleague.core.player.Rank;
-import org.bukkit.Bukkit;
 import org.bukkit.Material;
-import org.bukkit.command.Command;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
@@ -18,7 +15,7 @@ public class hat extends BasicCommand {
   }
 
   @Endpoint
-  public void hat(Player p) {
+  public void giveHat(Player p) {
     final PlayerInventory inv = p.getInventory();
     final ItemStack hand = inv.getItemInMainHand();
     final ItemStack head = inv.getHelmet();
@@ -36,7 +33,7 @@ public class hat extends BasicCommand {
   }
 
   @Endpoint
-  public void hat(Player p, @LiteralArg(value = "remove") String l) {
+  public void removeHat(Player p, @LiteralArg(value = "remove") String l) {
     final PlayerInventory inv = p.getInventory();
     final ItemStack head = inv.getHelmet();
     if(head == null || head.getType() == Material.AIR){
